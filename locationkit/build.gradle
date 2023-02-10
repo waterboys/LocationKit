@@ -10,7 +10,7 @@ android {
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 3
+        versionCode 4
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -42,11 +42,12 @@ dependencies {
 
 afterEvaluate {
     publishing {
-        publications{
-            release(MavenPublication){
+        publications {
+            release(MavenPublication) {
+                from components.release
                 groupId = 'com.github.waterboys'
                 artifactId = 'LocationKit'
-                version = '1.0.3'
+                version = '1.0.4'
             }
         }
     }
