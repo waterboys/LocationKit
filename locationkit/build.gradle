@@ -10,7 +10,7 @@ android {
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 4
+        versionCode 5
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -36,10 +36,9 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
     implementation 'com.google.android.gms:play-services-location:18.0.0'
-    implementation 'com.huawei.hms:location:6.9.0.300'
+    implementation 'com.huawei.hms:location:5.1.0.300'
 
 }
-
 afterEvaluate {
     publishing {
         publications {
@@ -47,7 +46,7 @@ afterEvaluate {
                 from components.release
                 groupId = 'com.github.waterboys'
                 artifactId = 'LocationKit'
-                version = '1.0.4'
+                version = '1.0.5'
             }
         }
     }
