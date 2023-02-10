@@ -1,5 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
+apply plugin: 'maven-publish'
 apply plugin: 'kotlin-android-extensions'
 android {
     compileSdkVersion 30
@@ -9,7 +10,7 @@ android {
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 2
+        versionCode 3
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -37,4 +38,16 @@ dependencies {
     implementation 'com.google.android.gms:play-services-location:18.0.0'
     implementation 'com.huawei.hms:location:6.9.0.300'
 
+}
+
+afterEvaluate {
+    publishing {
+        publications{
+            release(MavenPublication){
+                groupId = 'com.github.waterboys'
+                artifactId = 'LocationKit'
+                version = '1.0.3'
+            }
+        }
+    }
 }
