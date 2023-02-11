@@ -10,7 +10,7 @@ android {
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 3
+        versionCode 7
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -39,14 +39,14 @@ dependencies {
     implementation 'com.huawei.hms:location:6.9.0.300'
 
 }
-
 afterEvaluate {
     publishing {
-        publications{
-            release(MavenPublication){
+        publications {
+            release(MavenPublication) {
+                from components.release
                 groupId = 'com.github.waterboys'
                 artifactId = 'LocationKit'
-                version = '1.0.3'
+                version = '1.0.7'
             }
         }
     }
