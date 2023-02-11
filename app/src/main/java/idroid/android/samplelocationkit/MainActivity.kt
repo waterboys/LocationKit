@@ -2,11 +2,11 @@ package idroid.android.samplelocationkit
 
 import android.location.Location
 import android.os.Bundle
+import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import idroid.android.locationkit.listener.LocationListener
 import idroid.android.locationkit.manager.HuaweiGoogleLocationManager
-import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
     lateinit var locationService: HuaweiGoogleLocationManager
@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
 
         if (!locationService.isLocationPermissionGranted()) locationService.requestLocationPermission()
 
-        btnCurrentLocation.setOnClickListener {
+        findViewById<Button>(R.id.btnCurrentLocation).setOnClickListener {
             locationService.requestLocationUpdates(object : LocationListener {
                 override fun onLocationUpdate(currentLocation: Location) {
                     Toast.makeText(
@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
             })
         }
 
-        btnLastKnownLocation.setOnClickListener {
+        findViewById<Button>(R.id.btnLastKnownLocation).setOnClickListener {
             locationService.getLastKnownLocation(object : LocationListener {
                 override fun onLocationUpdate(lastKnownLocation: Location) {
                     Toast.makeText(
@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity() {
             })
         }
 
-        btnStopCurrentLocation.setOnClickListener {
+        findViewById<Button>(R.id.btnStopCurrentLocation).setOnClickListener {
             locationService.removeLocationUpdates()
         }
     }

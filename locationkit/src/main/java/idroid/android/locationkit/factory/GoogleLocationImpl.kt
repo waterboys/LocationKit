@@ -3,7 +3,12 @@ package idroid.android.locationkit.factory
 import android.app.Activity
 import android.os.Looper
 import android.util.Log
-import com.google.android.gms.location.*
+import androidx.annotation.RequiresPermission
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationCallback
+import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationResult
+import com.google.android.gms.location.LocationServices
 import idroid.android.locationkit.constants.Constants
 import idroid.android.locationkit.listener.LocationListener
 import idroid.android.locationkit.utils.Priority
@@ -14,6 +19,7 @@ class GoogleLocationImpl(activity: Activity) : BaseLocation(activity) {
         LocationServices.getFusedLocationProviderClient(activity)
     private var locationCallback: LocationCallback? = null
 
+    @RequiresPermission(anyOf = ["android.permission.ACCESS_COARSE_LOCATION", "android.permission.ACCESS_FINE_LOCATION"])
     override fun getLastKnownLocation(locationListener: LocationListener) {
         super.getLastKnownLocation(locationListener)
 
@@ -31,10 +37,11 @@ class GoogleLocationImpl(activity: Activity) : BaseLocation(activity) {
         }
     }
 
+    @RequiresPermission(anyOf = ["android.permission.ACCESS_COARSE_LOCATION", "android.permission.ACCESS_FINE_LOCATION"])
     override fun requestLocationUpdates(
         locationListener: LocationListener,
         priority: Priority?,
-        interval: Long?
+        interval: Long?,
     ) {
         super.requestLocationUpdates(locationListener, priority, interval)
 
@@ -50,14 +57,14 @@ class GoogleLocationImpl(activity: Activity) : BaseLocation(activity) {
 
         if (locationCallback == null) {
             locationCallback = object : LocationCallback() {
-                override fun onLocationResult(locationResult: LocationResult?) {
-                    if (locationResult != null) {
-                        locationListener.onLocationUpdate(locationResult.lastLocation)
-                    }
+                override fun onLocationResult(locationResult: LocationResult) {
+                    val lastLocation = locationResult.lastLocation ?: return
+                    locationListener.onLocationUpdate(lastLocation)
                 }
             }
             fusedLocationProviderClient.requestLocationUpdates(
-                locationRequest, locationCallback,
+                locationRequest,
+                locationCallback as LocationCallback,
                 Looper.getMainLooper()
             ).addOnSuccessListener {
                 Log.i(Constants.TAG, Constants.LocationWarningMessage.CURRENT_LOCATION_SUCCESS)
@@ -73,12 +80,13 @@ class GoogleLocationImpl(activity: Activity) : BaseLocation(activity) {
     override fun removeLocationUpdates() {
         super.removeLocationUpdates()
 
-        if (locationCallback == null) Log.i(
-            Constants.TAG,
-            Constants.LocationWarningMessage.CURRENT_LOCATION_REMOVE_NULL
-        )
-        else {
-            fusedLocationProviderClient.removeLocationUpdates(locationCallback)
+        if (locationCallback == null) {
+            Log.i(
+                Constants.TAG,
+                Constants.LocationWarningMessage.CURRENT_LOCATION_REMOVE_NULL
+            )
+        } else {
+            fusedLocationProviderClient.removeLocationUpdates(locationCallback!!)
                 .addOnSuccessListener {
                     locationCallback = null
                     Log.i(
