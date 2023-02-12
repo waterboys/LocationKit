@@ -64,7 +64,7 @@ class GoogleLocationImpl(activity: Activity) : BaseLocation(activity) {
             }
             fusedLocationProviderClient.requestLocationUpdates(
                 locationRequest,
-                locationCallback as LocationCallback,
+                locationCallback!!,
                 Looper.getMainLooper()
             ).addOnSuccessListener {
                 Log.i(Constants.TAG, Constants.LocationWarningMessage.CURRENT_LOCATION_SUCCESS)
