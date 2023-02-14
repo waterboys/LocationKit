@@ -6,8 +6,8 @@ plugins {
 
 
 android {
-    compileSdk = 30
-    buildToolsVersion = "30.0.3"
+    compileSdk = 31
+    buildToolsVersion = "31.0.0"
 
     publishing {
         singleVariant("release") {
@@ -33,31 +33,27 @@ android {
             )
         }
     }
-
 }
 
 
 dependencies {
-
-    implementation("androidx.appcompat:appcompat:1.2.0")
-    implementation("androidx.core:core-ktx:1.3.2")
-    implementation("androidx.constraintlayout:constraintlayout:2.0.4")
     implementation("com.google.android.gms:play-services-location:18.0.0")
     implementation("com.huawei.hms:location:6.9.0.300")
-
 }
 
 
 configure<PublishingExtension> {
-    publications.create<MavenPublication>("androidSdk") {
-        groupId = "com.github.waterboys"
-        artifactId = "LocationKit"
-        version = "1.1.0"
-        pom.packaging = "aar"
-        artifact("$buildDir/outputs/aar/locationkit-release.aar")
-    }
-    repositories {
-        mavenLocal()
+    afterEvaluate {
+        publications.create<MavenPublication>("maven") {
+            from(components["release"])
+            groupId = "com.github.waterboys"
+            artifactId = "LocationKit"
+            version = "1.1.2"
+            pom.packaging = "aar"
+            //artifact("$buildDir/outputs/aar/locationkit-release.aar")
+        }
+        repositories {
+            mavenLocal()
+        }
     }
 }
-
