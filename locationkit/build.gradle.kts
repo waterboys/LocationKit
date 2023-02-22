@@ -37,7 +37,7 @@ android {
 
 
 dependencies {
-    implementation("com.google.android.gms:play-services-location:18.0.0")
+    implementation("com.google.android.gms:play-services-location:20.0.0")
     implementation("com.huawei.hms:location:6.9.0.300")
 }
 
