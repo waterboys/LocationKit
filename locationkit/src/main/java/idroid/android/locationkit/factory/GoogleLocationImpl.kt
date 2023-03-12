@@ -59,6 +59,7 @@ class GoogleLocationImpl(activity: Activity) : BaseLocation(activity) {
             locationCallback = object : LocationCallback() {
                 override fun onLocationResult(locationResult: LocationResult) {
                     val lastLocation = locationResult.lastLocation ?: return
+                    if (lastLocation.isFromMockProvider) return
                     locationListener.onLocationUpdate(lastLocation)
                 }
             }

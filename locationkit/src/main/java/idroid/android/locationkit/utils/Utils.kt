@@ -14,7 +14,7 @@ class Utils {
                 context.checkCallingOrSelfPermission(Constants.Permission.COARSE_LOCATION)
             val backgroundLocation =
                 context.checkCallingOrSelfPermission(Constants.Permission.BACKGROUND_LOCATION)
-            return if (isBuildVersionDownToP() && CheckServiceAvaiable.getAvailableService(context) == DistributeType.HUAWEI_SERVICES) fineLocation == PackageManager.PERMISSION_GRANTED && coarseLocation == PackageManager.PERMISSION_GRANTED && backgroundLocation == PackageManager.PERMISSION_GRANTED
+            return if (isBuildVersionDownToP() && CheckServiceAvailable.getAvailableService(context) == DistributeType.HUAWEI_SERVICES) fineLocation == PackageManager.PERMISSION_GRANTED && coarseLocation == PackageManager.PERMISSION_GRANTED && backgroundLocation == PackageManager.PERMISSION_GRANTED
             else (fineLocation == PackageManager.PERMISSION_GRANTED && coarseLocation == PackageManager.PERMISSION_GRANTED)
         }
 

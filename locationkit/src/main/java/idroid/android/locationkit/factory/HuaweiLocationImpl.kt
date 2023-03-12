@@ -3,7 +3,11 @@ package idroid.android.locationkit.factory
 import android.app.Activity
 import android.os.Looper
 import android.util.Log
-import com.huawei.hms.location.*
+import com.huawei.hms.location.FusedLocationProviderClient
+import com.huawei.hms.location.LocationCallback
+import com.huawei.hms.location.LocationRequest
+import com.huawei.hms.location.LocationResult
+import com.huawei.hms.location.LocationServices
 import idroid.android.locationkit.constants.Constants
 import idroid.android.locationkit.listener.LocationListener
 import idroid.android.locationkit.utils.Priority
@@ -34,7 +38,7 @@ class HuaweiLocationImpl(activity: Activity) : BaseLocation(activity) {
     override fun requestLocationUpdates(
         locationListener: LocationListener,
         priority: Priority?,
-        interval: Long?
+        interval: Long?,
     ) {
         super.requestLocationUpdates(locationListener, priority, interval)
 
@@ -50,10 +54,10 @@ class HuaweiLocationImpl(activity: Activity) : BaseLocation(activity) {
 
         if (locationCallback == null) {
             locationCallback = object : LocationCallback() {
-                override fun onLocationResult(locationResult: LocationResult?) {
-                    if (locationResult != null) {
-                        locationListener.onLocationUpdate(locationResult.lastLocation)
-                    }
+                override fun onLocationResult(locationResult: LocationResult) {
+                    val lastLocation = locationResult.lastLocation ?: return
+                    if (lastLocation.isFromMockProvider) return
+                    locationListener.onLocationUpdate(locationResult.lastLocation)
                 }
             }
             fusedLocationProviderClient.requestLocationUpdates(

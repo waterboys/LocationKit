@@ -8,7 +8,7 @@ import idroid.android.locationkit.constants.Constants.TAG
 import idroid.android.locationkit.factory.Location
 import idroid.android.locationkit.factory.LocationFactory
 import idroid.android.locationkit.listener.LocationListener
-import idroid.android.locationkit.utils.CheckServiceAvaiable
+import idroid.android.locationkit.utils.CheckServiceAvailable
 import idroid.android.locationkit.utils.Priority
 import idroid.android.locationkit.utils.Utils
 
@@ -18,7 +18,7 @@ class HuaweiGoogleLocationManager(private val activity: Activity) {
     init {
         location = LocationFactory.getLocationFactory(
             activity,
-            CheckServiceAvaiable.getAvailableService(activity)
+            CheckServiceAvailable.getAvailableService(activity)
         )
     }
 
